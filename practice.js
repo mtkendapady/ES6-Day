@@ -5,15 +5,18 @@
 
 
 // Rewrite the following line so that inner is scoped to the if statement.
-if ( true ) {
-	var inner = "Inner!";
+// if ( true ) {
+// 	var inner = "Inner!";
+// }
+{
+let inner = "Inner!";
 }
 
 // declare a variable named noChange that cannot be re-assigned and give it a value of 100.
-
+const noChange = "100";
 
 // declare a new constant named vocab with the value of [ "let", "var", "destructuring", "spread", "rest" ]
-
+const vocab = [ "let", "const", "destructuring", "spread", "rest", "arrow function" ];
 
 // change "var" to "const" at index 1 of vocab
 
@@ -28,7 +31,10 @@ if ( true ) {
 
 // Declare 2 new variables, first and last, and assign them your first and last name.
 
+let first = "Matangi";
+let last = "Kendapady";
 
+const fullName = `${first} ${last}`
 
 // Declare the variable fullName and set it equal to your full name using template literals
 
@@ -43,10 +49,24 @@ if ( true ) {
 // and lovesDevMountain should be set to true.
 // learnES6 should be a method created with object method shorthand that returns "This is awesome!"
 
+const me = {
+		first
+	, last
+	, learnES6(){
+		return "This is awesome!"
+	}
+	, lovesDevMountain: true
+}
 
 
 // using computed property names create a new object named flipped where the keys are your first and last name
 // and the values are "first" and "last"
+
+
+var flipped = {
+  [first]: "first",
+  [last]: "last",
+};
 
 
 //////////////////////////////
@@ -64,6 +84,8 @@ const destructuring = {
 // with the values taken from the above object
 
 
+const objects = destructuring.objects
+const arrays = destructuring.arrays
 
 
 // do not modify
@@ -73,6 +95,10 @@ const vocabAgain = [ "let", "const", "destructuring", "spread", "rest", "arrow f
 // notVar should be "let", alsoNotVar should be "const", and everythingElse should contain the rest of the array.
 
 
+var [notVar, alsoNotVar, ...everythingElse] = vocabAgain;
+console.log(notVar);
+console.log(alsoNotVar);
+console.log(...everythingElse);
 
 ////////////
 /* ARRAYS */
@@ -85,6 +111,7 @@ const lastFive = [ 6, 7, 8, 9, 10 ];
 // using the spread operator, create a new array named oneThroughTen.
 // You should use the above arrays (and 2 missing digits of your own)
 
+const oneThroughTen = [ ...firstThree , 4 , 5 , ...lastFive ];
 
 // do not modify
 const jsVersions = [ "es5", "es6", "es2017 onward" ];
@@ -99,14 +126,14 @@ function whatToUse( past, present, future ) {
 // using the spread operator, pass each element of jsVersions as an individual argument to whatToUse
 // and save the return value in a variable named currentJS.
 
-
+var currentJS = whatToUse( ...jsVersions );
 
 ///////////////
 /* FUNCTIONS */
 ///////////////
 
 // modify greeter to greet Anonymous if no name is passed.
-function greeter( name ) {
+function greeter( name = "Anonymous" ) {
 	return `Hi ${ name }!`
 }
 
@@ -115,17 +142,32 @@ function greeter( name ) {
 // and returns number to the power of exponent.
 // if no exponent is passed, the exponent should be two
 
+function toPower( number, exponent = 2) {
+	return Math.pow( number, exponent );
+}
+
 
 // using rest parameters, write a function named evenOdd that takes in
 // any number of parameters and returns an object with two properties - even and odd.
 // this function should check each parameter and push it to the appropriate property.
-
+function evenOdd( ...nums ) {
+	return nums.reduce( ( p1, p2 ) => {
+		if ( p2 % 2 === 0 ) {
+			p1.even.push( p2 );
+		} else {
+			p1.odd.push( p2 );
+		}
+		return p1;
+	}, { even: [], odd: [] } );
+}
 
 
 // write a function named multiply that takes in a num parameter and an arbitrary amount of
 // additional numbers. This function should return an array of each additional number
 // multiplied by num.
-
+function multiply( num, ...additional ) {
+	return additional.map( int => int * num );
+}
 
 
 // do not modify
@@ -133,7 +175,7 @@ const bits = [ 2, 4, 8, 16, 32, 64, 128 ];
 
 // using an arrow function and the built in .map method, create a new array
 // named mooresBits. mooresBits should be the bits array doubled.
-
+var mooresBits = bits.map( int => int * 2 );
 
 // do not modify
 const that = {
@@ -144,3 +186,5 @@ const that = {
 
 // using an arrow function, add a property named arrow that returns the window object
 // do this without using the window keyword. HINT: The default binding of the this keyword
+
+that.arrow = () => this
